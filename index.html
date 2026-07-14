@@ -26,6 +26,7 @@ background:
 radial-gradient(circle at top,#2d1b69,#120136 35%,#050816 70%,#000 100%);
 position:relative;
 color:white;
+font-family: 'Poppins', sans-serif;
 }
 
 /* ===== Background Galaxy ===== */
@@ -123,15 +124,17 @@ top:120%;
 left:120%;
 opacity:0;
 }
-}/* ========================= */
+}
+
+/* ========================= */
 /*        GLASS CARD         */
 /* ========================= */
 
 .card{
 position:relative;
 width:90%;
-max-width:380px;
-padding:35px 28px;
+max-width:420px;
+padding:45px 35px;
 text-align:center;
 
 background:rgba(255,255,255,.08);
@@ -205,9 +208,9 @@ transform:translateY(-10px);
 }
 
 h1{
-font-size:30px;
+font-size:32px;
 font-weight:700;
-margin-bottom:15px;
+margin-bottom:8px;
 
 background:linear-gradient(
 90deg,
@@ -218,81 +221,114 @@ background:linear-gradient(
 
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
+background-clip:text;
 }
 
 .subtitle{
-font-size:16px;
-line-height:1.8;
-color:#f2f2f2;
-opacity:.95;
-margin-bottom:25px;
+font-size:15px;
+line-height:1.9;
+color:#e8e8e8;
+opacity:.9;
+margin-bottom:30px;
+margin-top:8px;
+font-weight:300;
+}
+
+.button-container{
+display:flex;
+flex-direction:column;
+gap:12px;
+margin-top:30px;
 }
 
 button{
-
-padding:13px 30px;
-
+padding:14px 32px;
 border:none;
 border-radius:50px;
-
-font-size:16px;
+font-size:15px;
 font-weight:600;
+cursor:pointer;
+transition:.35s ease;
+border:1px solid transparent;
+}
 
+.btn-primary{
 background:linear-gradient(
 90deg,
 #7c5cff,
 #45c7ff
 );
-
 color:white;
-
-cursor:pointer;
-
-transition:.35s;
-
 box-shadow:
 0 0 18px rgba(124,92,255,.45);
-
 }
 
-button:hover{
-
-transform:scale(1.08);
-
+.btn-primary:hover{
+transform:translateY(-2px);
 box-shadow:
 0 0 30px rgba(124,92,255,.7);
+}
 
+.btn-secondary{
+background:transparent;
+color:#89dfff;
+border:1.5px solid rgba(137,223,255,.5);
+font-size:14px;
+}
+
+.btn-secondary:hover{
+background:rgba(137,223,255,.1);
+border-color:#89dfff;
+box-shadow:0 0 15px rgba(137,223,255,.3);
 }
 
 #message{
-
 display:none;
-
-margin-top:25px;
-
-font-size:15px;
-
-line-height:1.8;
-
+margin-top:30px;
+font-size:14px;
+line-height:2;
 animation:fade .8s;
-
-color:#fff;
-
+color:#f0f0f0;
+padding:20px;
+background:rgba(255,255,255,.05);
+border-radius:16px;
+border-left:3px solid #89dfff;
+text-align:left;
 }
 
 @keyframes fade{
-
 from{
 opacity:0;
 transform:translateY(15px);
 }
-
 to{
 opacity:1;
 transform:translateY(0);
 }
+}
 
-  }</style>
+/* Mobile responsiveness */
+@media(max-width:480px){
+h1{
+font-size:26px;
+}
+
+.subtitle{
+font-size:14px;
+}
+
+.card{
+max-width:85%;
+padding:35px 25px;
+}
+
+button{
+padding:12px 24px;
+font-size:14px;
+}
+}
+
+</style>
 </head>
 
 <body>
@@ -306,33 +342,42 @@ transform:translateY(0);
 
 <div class="card">
 
-<h1>Hi Stranger 🌌</h1>
+<h1>Hi there 🌌</h1>
 
 <p class="subtitle" id="typing"></p>
 
-<button onclick="showMessage()">
+<div class="button-container">
+<button class="btn-primary" onclick="showMessage()">
 Open Note ✨
 </button>
 
+<button class="btn-secondary" onclick="copyLink()">
+Bagikan Halaman Ini
+</button>
+</div>
+
 <div id="message">
 
-💜<br><br>
+💜 <strong>Untuk Kamu</strong><br><br>
 
-Terima kasih sudah meluangkan waktu buat buka halaman kecil ini.
+Aku sengaja bikin halaman ini karena aku ingin kamu tahu kalau kamu special buat aku.
 
-Semoga hari-harimu selalu dipenuhi hal-hal baik.
+Dalam hiruk pikuk kehidupan, kehadiran kamu bikin semuanya terasa lebih bermakna.
 
-Kalau hari ini terasa berat, semoga besok datang dengan banyak alasan untuk tersenyum.
+Semoga hari-harimu selalu penuh dengan hal-hal baik dan tawa yang tulus.
 
-Take care ya. 🌙✨
+Kalau ada yang berat, aku di sini. 🌙✨<br><br>
+
+<em style="font-size:13px; opacity:0.8;">— Made with 💙 for you</em>
 
 </div>
 
-</div><script>
+</div>
+
+<script>
 
 // Efek mengetik
-const text =
-"Hari mu gimana?\n\nSemoga semuanya berjalan dengan baik ya.\nTerima kasih sudah mampir ke halaman kecil ini ✨";
+const text = "Ada yang ingin aku sampaikan...\nBaca catatan ku di bawah ya 💫";
 
 let i = 0;
 const typing = document.getElementById("typing");
@@ -345,7 +390,7 @@ function typeWriter(){
             typing.innerHTML += text.charAt(i);
         }
         i++;
-        setTimeout(typeWriter,45);
+        setTimeout(typeWriter,50);
     }
 }
 
@@ -353,47 +398,48 @@ typeWriter();
 
 // Tombol Open Note
 function showMessage(){
-    document.getElementById("message").style.display="block";
+    const messageDiv = document.getElementById("message");
+    if(messageDiv.style.display === "block"){
+        messageDiv.style.display = "none";
+    }else{
+        messageDiv.style.display = "block";
+    }
+}
+
+// Copy link ke clipboard
+function copyLink(){
+    const currentUrl = window.location.href;
+    navigator.clipboard.writeText(currentUrl).then(() => {
+        alert("Link halaman sudah disalin! Bagikan ke dia 💫");
+    }).catch(() => {
+        alert("Link: " + currentUrl);
+    });
 }
 
 // Generate bintang
 const stars = document.getElementById("stars");
 
 for(let i=0;i<220;i++){
-
     let star=document.createElement("div");
-
     star.className="star";
-
     star.style.left=Math.random()*100+"%";
-
     star.style.top=Math.random()*100+"%";
-
     star.style.animationDelay=Math.random()*3+"s";
-
     star.style.animationDuration=(2+Math.random()*4)+"s";
-
     stars.appendChild(star);
-
 }
 
 // Shooting star acak
 setInterval(()=>{
-
-const shoot=document.querySelector(".shooting-star");
-
-shoot.style.animation="none";
-
-shoot.offsetHeight;
-
-shoot.style.top=Math.random()*30+"%";
-shoot.style.left="-20%";
-
-shoot.style.animation="shoot 3s linear";
-
+    const shoot=document.querySelector(".shooting-star");
+    shoot.style.animation="none";
+    shoot.offsetHeight;
+    shoot.style.top=Math.random()*30+"%";
+    shoot.style.left="-20%";
+    shoot.style.animation="shoot 3s linear";
 },6000);
 
 </script>
 
 </body>
-  </html>
+</html>
